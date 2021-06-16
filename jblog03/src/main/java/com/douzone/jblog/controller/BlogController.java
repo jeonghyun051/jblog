@@ -7,15 +7,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@RequestMapping("/{id:(?!assets).*}")
+@RequestMapping("/blog/{id:(?!assets).*}")
 @Controller
 public class BlogController {
 
 	//{id}
 	//{id}/{categoryNo}
 	//{id}/{categoryNo}/{postNo}
-	
-	@ResponseBody
+
 	@RequestMapping({"","/{pathNo1}","/{pathNo1}/{pathNo2}"})
 	public String index(
 			@PathVariable("id") String id,
@@ -35,13 +34,13 @@ public class BlogController {
 		System.out.println("category:" + categoryNo);
 		System.out.println("postNo:" + postNo);
 		
-		return "blogController.index";
+		return "blog/index";
 	}
 	
 	@ResponseBody
 	@RequestMapping("/admin/basic")
 	public String adminBasic(@PathVariable("id") String id) {
 		System.out.println("id:"+id);
-		return "BlogController.adminBasic";
+		return "blog/admin/basic";
 	}
 }
