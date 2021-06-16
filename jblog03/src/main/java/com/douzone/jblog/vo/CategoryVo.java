@@ -4,7 +4,7 @@ public class CategoryVo {
 	
 	private Long no;
 	private String name;
-	private String desc;
+	private String descs;
 	private String regDate;
 	private String blogId;
 	
@@ -21,10 +21,10 @@ public class CategoryVo {
 		this.name = name;
 	}
 	public String getDesc() {
-		return desc;
+		return descs;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDesc(String descs) {
+		this.descs = descs;
 	}
 	public String getRegDate() {
 		return regDate;
@@ -40,7 +40,7 @@ public class CategoryVo {
 	}
 	@Override
 	public String toString() {
-		return "CategoryVo [no=" + no + ", name=" + name + ", desc=" + desc + ", regDate=" + regDate + ", blogId="
+		return "CategoryVo [no=" + no + ", name=" + name + ", descs=" + descs + ", regDate=" + regDate + ", blogId="
 				+ blogId + "]";
 	}
 }

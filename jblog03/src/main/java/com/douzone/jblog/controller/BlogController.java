@@ -1,15 +1,29 @@
 package com.douzone.jblog.controller;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.douzone.jblog.service.BlogService;
+import com.douzone.jblog.service.CategoryService;
+import com.douzone.jblog.vo.BlogVo;
+import com.douzone.jblog.vo.CategoryVo;
+
 @RequestMapping("/blog/{id:(?!assets).*}")
 @Controller
 public class BlogController {
+	
+	@Autowired
+	private BlogService blogService;
+	
+	@Autowired
+	private CategoryService categoryService;
 
 	//{id}
 	//{id}/{categoryNo}
@@ -19,7 +33,8 @@ public class BlogController {
 	public String index(
 			@PathVariable("id") String id,
 			@PathVariable("pathNo1") Optional<Long> pathNo1,
-			@PathVariable("pathNo2") Optional<Long> pathNo2) {
+			@PathVariable("pathNo2") Optional<Long> pathNo2,
+			Model model) {
 		Long categoryNo = 0L;
 		Long postNo = 0L;
 		
@@ -34,6 +49,13 @@ public class BlogController {
 		System.out.println("category:" + categoryNo);
 		System.out.println("postNo:" + postNo);
 		
+		BlogVo blogVo = blogService.finById(id);
+		List<CategoryVo> categoryList = categoryService.findAll(id);
+		
+		model.addAttribute("blogVo",blogService.finById(id));
+		model.addAttribute("categoryList",categoryService.findAll(id));
+		
+
 		return "blog/index";
 	}
 	
