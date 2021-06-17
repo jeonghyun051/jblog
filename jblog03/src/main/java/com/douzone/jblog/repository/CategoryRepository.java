@@ -19,9 +19,14 @@ public class CategoryRepository {
 	}
 
 	public List<CategoryVo> findAll(String id) {
-		System.out.println("id레파지토리:" +id);
 		return sqlSession.selectList("category.findAll",id);
 	}
 
+	public void insert(CategoryVo categoryVo) {
+		sqlSession.insert("category.insert",categoryVo);
+	}
 
+	public List<CategoryVo> findAllAndCount(String id) {
+		return sqlSession.selectList("category.findAll",id);	
+	}
 }

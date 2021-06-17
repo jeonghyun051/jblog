@@ -18,4 +18,15 @@ public class CategoryService {
 		return categoryRepository.findAll(id);
 	}
 
+	public void add(CategoryVo categoryVo) {
+		categoryRepository.insert(categoryVo);
+		
+	}
+
+	public List<CategoryVo> findAllAndCount(String id) {
+		System.out.println("값난옴?"+categoryRepository.findAllAndCount(id));
+		return categoryRepository.findAllAndCount(id);
+		
+	}
+
 }

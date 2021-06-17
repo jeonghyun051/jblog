@@ -1,21 +1,19 @@
 package com.douzone.jblog.controller;
 
 import java.util.List;
-
-
+import java.util.Locale.Category;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.douzone.jblog.security.Auth;
 import com.douzone.jblog.service.BlogService;
 import com.douzone.jblog.service.CategoryService;
 import com.douzone.jblog.service.FileUploadService;
@@ -60,22 +58,37 @@ public class BlogController {
 	
 	@RequestMapping("/admin/basic")
 	public String adminBasic(@PathVariable("id") String id, Model model) {
-		System.out.println("id:"+id);
 		model.addAttribute("blogVo",blogService.finById(id));
 		return "blog/admin/basic";
 	}
 	
 	@RequestMapping(value = "/admin/basic", method = RequestMethod.POST)
-	public String upload(@PathVariable("id") String id, BlogVo blogVo, @RequestParam("file") MultipartFile file, Model model) {
-		System.out.println("실행됨?");
+	public String upload(@PathVariable("id") String id, @ModelAttribute BlogVo blogVo, @RequestParam("file") MultipartFile file, Model model) {
 		String url = fileUploadService.restore(file);
 		if (url == null || blogVo.getTitle().isEmpty() == true) {
 			return "blog/admin/basic";
 		}
 		blogVo.setLogo(url);
 		blogService.modify(blogVo);
-	
-		model.addAttribute("blogVo",blogService.finById(id));
+
 		return "blog/admin/basic";
+	}
+	
+	@RequestMapping("/admin/category")
+	public String adminCategory(@ModelAttribute BlogVo blogVo, Model model) {
+		model.addAttribute("categoryList",categoryService.findAllAndCount(blogVo.getId())); 
+		return "blog/admin/category";
+	}
+	
+	@RequestMapping(value = "/admin/category/add", method = RequestMethod.POST)
+	public String addCategory(@ModelAttribute BlogVo blogVo, CategoryVo categoryVo) {
+		categoryService.add(categoryVo);
+		return "redirect:blog/admin/category";
+	}	
+	
+	@RequestMapping("/admin/write")
+	public String write(@ModelAttribute BlogVo blogVo, Model model) {
+		model.addAttribute("categoryList",categoryService.findAll(blogVo.getId()));
+		return "blog/admin/write";
 	}
 }

@@ -33,7 +33,7 @@ public class UserService {
 
 		CategoryVo categoryVo = new CategoryVo();
 		categoryVo.setName("기본 카테고리");
-		categoryVo.setDesc("카테고리 설명");
+		categoryVo.setDescs("기본 카테고리 입니다.");
 		categoryVo.setBlogId(userVo.getId());
 		categoryRepository.categoryDefaultInsert(categoryVo);
 	}

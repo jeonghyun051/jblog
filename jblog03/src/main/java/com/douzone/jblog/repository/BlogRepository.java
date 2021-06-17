@@ -21,7 +21,6 @@ public class BlogRepository {
 	}
 
 	public void update(BlogVo blogVo) {
-		int result = sqlSession.update("blog.update",blogVo);
-		System.out.println("블로그레파지토리 result:" + result);
+		sqlSession.update("blog.update",blogVo);
 	}
 }
