@@ -42,7 +42,7 @@ public class PostRepository {
 	public List<PostVo> findAll(Long postNo, Long categoryNo) {
 		Map<String,Long> map = new HashMap<>();
 		map.put("postNo", postNo);
-		map.put("categoryNo", categoryNo);
+		map.put("categoryNo", categoryNo);	
 		return sqlSession.selectList("post.findAll",map);
 	}
 }

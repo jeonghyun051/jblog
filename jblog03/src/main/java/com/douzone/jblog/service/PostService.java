@@ -23,19 +23,22 @@ public class PostService {
 	public Map<String, Object> findAll(Long categoryNo, Long postNo, String id) {
 		if(postNo == 0L) { // 카테고리
 			PostVo postVo = postRepository.defaultSelect(categoryNo,id);
+			if(postVo == null || postVo.equals(null)) {
+				Map<String,Object> map = new HashMap<>();
+				map.put("postVo", postVo);
+				return map;
+			}
 			List<PostVo> postList = postRepository.select(categoryNo,postVo.getNo(),id);
 			Map<String,Object> map = new HashMap<>();
 			map.put("postVo", postVo);
 			map.put("postList", postList);
+			System.out.println("서비스 실행1" + postVo.getNo());
 			System.out.println("서비스 실행1" + postVo);
 			System.out.println("서비스 실행1" + postList);
 			return map;
 		} else {
 			PostVo postVo = postRepository.findById(postNo);
 			List<PostVo> postList = postRepository.findAll(postVo.getNo(), categoryNo);
-			if(postList == null) {
-				postList=null;
-			}
 			Map<String,Object> map = new HashMap<>();
 			map.put("postVo", postVo);
 			map.put("postList", postList);		
