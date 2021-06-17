@@ -1,6 +1,10 @@
 package com.douzone.jblog.controller;
 
+import java.util.Map;
 import java.util.Optional;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +24,6 @@ import com.douzone.jblog.vo.BlogVo;
 import com.douzone.jblog.vo.CategoryVo;
 import com.douzone.jblog.vo.PostVo;
 
-//{id}/{categoryNo}/{postNo}
 @RequestMapping("/blog/{id:(?!assets).*}")			
 @Controller
 public class BlogController {			
@@ -37,12 +40,14 @@ public class BlogController {
 	@Autowired
 	private FileUploadService fileUploadService;
 
+	//{id}/{categoryNo}/{postNo}
 	@RequestMapping({"","/{pathNo1}","/{pathNo1}/{pathNo2}"})
 	public String index(
 			@PathVariable("id") String id,
 			@PathVariable("pathNo1") Optional<Long> pathNo1,
 			@PathVariable("pathNo2") Optional<Long> pathNo2,
-			Model model) {
+			Model model,
+			HttpSession session) {
 		Long categoryNo = 0L;
 		Long postNo = 0L;
 		
@@ -52,7 +57,12 @@ public class BlogController {
 		} else if(pathNo1.isPresent()) {
 			categoryNo = pathNo1.get();
 		}
+		Map<String, Object> map = postService.findAll(categoryNo, postNo, id);
+	
+		ServletContext application = session.getServletContext();
+		application.setAttribute("title", blogService.finById(id).getTitle());
 		
+		model.addAttribute("map",map);
 		model.addAttribute("blogVo",blogService.finById(id));
 		model.addAttribute("categoryList",categoryService.findAll(id));
 		
@@ -84,9 +94,11 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value = "/admin/category/add", method = RequestMethod.POST)
-	public String addCategory(@ModelAttribute BlogVo blogVo, CategoryVo categoryVo) {
+	public String addCategory(@ModelAttribute BlogVo blogVo, CategoryVo categoryVo,Model model,@PathVariable String id) {
 		categoryService.add(categoryVo);
-		return "redirect:blog/admin/category";
+		model.addAttribute("categoryList",categoryService.findAllAndCount(blogVo.getId()));
+		
+		return "redirect:/blog/{id}/admin/category";
 	}	
 	
 	@RequestMapping("/admin/write")
@@ -100,5 +112,11 @@ public class BlogController {
 		postService.insert(post);
 		model.addAttribute("categoryList",categoryService.findAll(blogVo.getId()));
 		return "blog/admin/write";
+	}
+	
+	@RequestMapping(value = "/admin/category/delete/{no}", method = RequestMethod.GET)
+	public String delete(@ModelAttribute BlogVo blogVo, @PathVariable Long no, Model model, @PathVariable String id) {
+		categoryService.delete(no);
+		return "redirect:/blog/{id}/admin/category";
 	}
 }

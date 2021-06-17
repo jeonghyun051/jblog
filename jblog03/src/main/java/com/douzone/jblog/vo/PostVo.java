@@ -29,7 +29,8 @@ public class PostVo {
 		return regDate;
 	}
 	public void setRegDate(String regDate) {
-		this.regDate = regDate;
+		String abc = regDate.substring(0,10);
+		this.regDate = abc;
 	}
 	public Long getCategoryNo() {
 		return categoryNo;

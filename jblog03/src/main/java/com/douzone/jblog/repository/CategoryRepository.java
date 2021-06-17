@@ -29,4 +29,9 @@ public class CategoryRepository {
 	public List<CategoryVo> findAllAndCount(String id) {
 		return sqlSession.selectList("category.findAllAndCount",id);	
 	}
+
+	public void delete(Long no) {
+		sqlSession.delete("category.delete",no);
+		
+	}
 }

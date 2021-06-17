@@ -7,4 +7,61 @@
 			values (null, #{title }, #{contents }, now(), #{categoryNo })
 		]]>
 	</insert>
+	
+	<select id="defaultSelect" parameterType="map" resultType="postvo">
+		<choose>
+			<when test="categoryNo == 0">
+				<![CDATA[
+					select no, title, contents, reg_date as regDate, category_no as categoryNo
+					from post
+					where no = (
+						select max(no) 
+    					from post
+    					where category_no=(
+    										select min(no) 		
+    										from category 
+    										where blog_id = '박정욱'));
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					select no, title, contents, reg_date as regDate, category_no as categoryNo
+					from post
+					where no = (
+						select max(no) 
+    					from post
+    					where category_no=${categoryNo })
+				]]>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAll" parameterType="map" resultType="postvo">
+		<choose>
+			<when test="categoryNo == 0">
+				<![CDATA[
+					select no, title, contents, reg_date as regDate, category_no as categoryNo
+					from post
+					where category_no in (select min(no) from category where blog_id = #{id }) and no != #{postNo }
+					order by no desc
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					select no, title, contents, reg_date as regDate, category_no as categoryNo
+					from post
+					where no != #{postNo } and category_no = #{categoryNo }
+					order by no desc
+				]]>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findById" parameterType="long" resultType="postvo">
+		<![CDATA[
+			select no, title, contents, reg_date as regDate, category_no as categoryNo
+			from post
+			where no = #{no }
+		]]>
+	</select>
 </mapper>
