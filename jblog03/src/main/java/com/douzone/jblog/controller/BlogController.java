@@ -1,7 +1,5 @@
 package com.douzone.jblog.controller;
 
-import java.util.List;
-import java.util.Locale.Category;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.douzone.jblog.service.BlogService;
 import com.douzone.jblog.service.CategoryService;
 import com.douzone.jblog.service.FileUploadService;
+import com.douzone.jblog.service.PostService;
 import com.douzone.jblog.vo.BlogVo;
 import com.douzone.jblog.vo.CategoryVo;
+import com.douzone.jblog.vo.PostVo;
 
 //{id}/{categoryNo}/{postNo}
 @RequestMapping("/blog/{id:(?!assets).*}")			
@@ -30,6 +30,9 @@ public class BlogController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private PostService postService;
 	
 	@Autowired
 	private FileUploadService fileUploadService;
@@ -88,6 +91,13 @@ public class BlogController {
 	
 	@RequestMapping("/admin/write")
 	public String write(@ModelAttribute BlogVo blogVo, Model model) {
+		model.addAttribute("categoryList",categoryService.findAll(blogVo.getId()));
+		return "blog/admin/write";
+	}
+	
+	@RequestMapping(value = "/admin/write", method = RequestMethod.POST)
+	public String write(@ModelAttribute BlogVo blogVo, PostVo post, Model model) {
+		postService.insert(post);
 		model.addAttribute("categoryList",categoryService.findAll(blogVo.getId()));
 		return "blog/admin/write";
 	}

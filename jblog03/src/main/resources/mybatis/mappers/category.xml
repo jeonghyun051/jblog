@@ -25,10 +25,14 @@
 	
 	<select id="findAllAndCount" parameterType="string" resultType="categoryvo">
 		<![CDATA[
-			select no, name, descs, reg_date as regDate, blog_id as blogId, count(name) as count
-			from category
-			where blog_id = #{id }
-			group by name;
+			select c.no as no, c.name as name, c.descs as descs, c.reg_date as regDate, c.blog_id as blogId, p.count as count
+			from category c
+			left outer join 
+				(select category_no, count(*) as count 
+				from post 
+				group by category_no) p 
+			ON c.no = p.category_no
+			where c.blog_id=#{id }
 		]]>
 	</select>
 </mapper>

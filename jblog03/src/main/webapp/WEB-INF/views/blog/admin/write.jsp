@@ -15,13 +15,13 @@
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<c:import url="/WEB-INF/views/blog/admin/includes/navigation.jsp" />
-				<form action="" method="post">
+				<form action="${pageContext.request.contextPath }/blog/${blogVo.id}/admin/write" method="post">
 			      	<table class="admin-cat-write">
 			      		<tr>
 			      			<td class="t">제목</td>
 			      			<td>
 			      				<input type="text" size="60" name="title">
-				      			<select name="category">
+				      			<select name="categoryNo">
 				      				<c:forEach var="category" items="${categoryList }">
 				      					<option value=${category.no }>${category.name }</option>
 				      				</c:forEach>

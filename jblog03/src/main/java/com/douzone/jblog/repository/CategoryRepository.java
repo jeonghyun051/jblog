@@ -27,6 +27,6 @@ public class CategoryRepository {
 	}
 
 	public List<CategoryVo> findAllAndCount(String id) {
-		return sqlSession.selectList("category.findAll",id);	
+		return sqlSession.selectList("category.findAllAndCount",id);	
 	}
 }
