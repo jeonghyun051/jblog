@@ -15,4 +15,8 @@ public class BlogService {
 	public BlogVo finById(String id) {
 		return blogRepository.findById(id);
 	}
+
+	public void modify(BlogVo blogVo) {
+		blogRepository.update(blogVo);
+	}
 }

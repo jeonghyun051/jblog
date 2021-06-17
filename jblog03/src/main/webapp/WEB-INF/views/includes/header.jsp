@@ -10,7 +10,6 @@
 		<c:when test="${empty authUser }"> <!-- authUser를 null로 비교하면 안됨 -->
 			<li><a href="${pageContext.request.contextPath }/user/login">로그인</a></li>
 			<li><a href="${pageContext.request.contextPath }/user/join">회원가입</a></li>
-			<li><a href="${pageContext.request.contextPath }/user/logout">로그아웃</a></li>
 			<li><a href="${pageContext.request.contextPath }/user/login">내블로그</a></li>
 		</c:when>
 		<c:otherwise>

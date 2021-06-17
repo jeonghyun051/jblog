@@ -11,23 +11,7 @@
 </head>
 <body>
 	<div id="container">
-		<div id="header">
-			<h1>${blogVo.title }</h1>
-			<ul>
-				<c:choose>
-					<c:when test="${empty authUser }">
-						<li><a href="${pageContext.request.contextPath }/user/login">로그인</a></li>
-					</c:when>
-					<c:otherwise>
-						<li><a href="${pageContext.request.contextPath }/user/logout">로그아웃</a></li>
-						<c:if test="${authUser.id == blogVo.id }">
-							<li><a href="">블로그 관리</a></li>
-						</c:if>			
-					</c:otherwise>
-				</c:choose>
-				
-			</ul>
-		</div>
+	<c:import url="/WEB-INF/views/blog/admin/includes/header.jsp" />
 		<div id="wrapper">
 			<div id="content">
 				<div class="blog-content">
@@ -67,12 +51,7 @@
 				<li><a href="">기타</a></li>
 			</ul>
 		</div>
-		
-		<div id="footer">
-			<p>
-				<strong>Spring 이야기</strong> is powered by JBlog (c)2016
-			</p>
-		</div>
+		<c:import url="/WEB-INF/views/blog/admin/includes/footer.jsp" />
 	</div>
 </body>
 </html>
