@@ -1,9 +1,19 @@
 package com.douzone.jblog.vo;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 public class PostVo {
 	
 	private Long no;
+	
+	@NotEmpty
+	@Length(min=1,max=15)
 	private String title;
+	
+	@NotEmpty
+	@Length(min=1,max=100)
 	private String contents;
 	private String regDate;
 	private Long categoryNo;

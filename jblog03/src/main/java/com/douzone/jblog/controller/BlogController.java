@@ -5,10 +5,12 @@ import java.util.Optional;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -107,7 +109,7 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value = "/admin/write", method = RequestMethod.POST)
-	public String write(@ModelAttribute BlogVo blogVo, PostVo post, Model model) {
+	public String write(@ModelAttribute BlogVo blogVo, BindingResult result, PostVo post, Model model, @PathVariable String id) {
 		postService.insert(post);
 		model.addAttribute("categoryList",categoryService.findAll(blogVo.getId()));
 		return "blog/admin/write";
