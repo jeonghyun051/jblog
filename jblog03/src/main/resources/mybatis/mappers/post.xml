@@ -20,7 +20,7 @@
     					where category_no=(
     										select min(no) 		
     										from category 
-    										where blog_id = '박정욱'));
+    										where blog_id = #{id }));
 				]]>
 			</when>
 			<otherwise>
