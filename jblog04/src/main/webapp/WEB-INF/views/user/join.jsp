@@ -29,7 +29,7 @@
 			
 			<label class="block-label" for="blog-id">아이디</label>
 			<!-- <input id="blog-id" name="id" type="text"> -->
-			<form:input path="id" /> 
+			<form:input id="blog-id" path="id" /> 
 			<input id="btn-checkemail" type="button" onClick="idCheck()" value="id 중복체크">
 			<p style="color:#f00; text-align:left; padding-left:0">
 				<spring:hasBindErrors name="userVo">
@@ -74,14 +74,14 @@
 	function idCheck(){
 		var id = $("#blog-id").val();
 		console.log(id);
-		if(id == ""){
+		if(id == "" || id == null){
 			alert("아이디를 입력해주세요");
 			isChecking = false;
 			return;
 		}
 		
 		$.ajax({
-			url: "/jblog03/user/checkId?id="+id,
+			url: "/jblog04/user/checkId?id="+id,
 			type: "get",
 			dataType: "json",
 			error: function(xhr, status, e){
@@ -104,7 +104,7 @@
 			}
 				
 			isChecking = true;
-			$("#btn-checkemail").attr("readonly","readonly");
+			$("#blog-id").attr("readonly","readonly");
 			alert("해당 아이디를 사용할 수 있습니다.")
 			}
 		});
