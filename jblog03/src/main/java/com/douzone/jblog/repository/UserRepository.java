@@ -16,8 +16,7 @@ public class UserRepository {
 	private SqlSession sqlSession;
 
 	public void insert(UserVo vo) {
-		sqlSession.insert("user.insert",vo);
-		
+		sqlSession.insert("user.insert",vo);	
 	}
 	
 	public UserVo login(String id, String password) {
@@ -25,5 +24,9 @@ public class UserRepository {
 		map.put("id", id);
 		map.put("password", password);
 		return sqlSession.selectOne("user.selectByIdAndPassword",map);
+	}
+
+	public UserVo findById(String id) {
+		return sqlSession.selectOne("user.findById", id);
 	}
 }

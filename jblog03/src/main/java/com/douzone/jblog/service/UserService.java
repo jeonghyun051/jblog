@@ -41,4 +41,9 @@ public class UserService {
 	public UserVo login(String id, String password) {
 		return userRepository.login(id,password);	
 	}
+
+	public UserVo findById(String id) {
+		return userRepository.findById(id);
+		
+	}
 }

@@ -32,9 +32,6 @@ public class PostService {
 			Map<String,Object> map = new HashMap<>();
 			map.put("postVo", postVo);
 			map.put("postList", postList);
-			System.out.println("서비스 실행1" + postVo.getNo());
-			System.out.println("서비스 실행1" + postVo);
-			System.out.println("서비스 실행1" + postList);
 			return map;
 		} else {
 			PostVo postVo = postRepository.findById(postNo);
@@ -42,8 +39,6 @@ public class PostService {
 			Map<String,Object> map = new HashMap<>();
 			map.put("postVo", postVo);
 			map.put("postList", postList);		
-			System.out.println("서비스 실행2" + postVo);
-			System.out.println("서비스 실행2" + postList);
 			return map;
 		}
 	}

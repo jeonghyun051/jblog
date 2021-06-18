@@ -97,7 +97,6 @@ public class BlogController {
 	public String addCategory(@ModelAttribute BlogVo blogVo, CategoryVo categoryVo,Model model,@PathVariable String id) {
 		categoryService.add(categoryVo);
 		model.addAttribute("categoryList",categoryService.findAllAndCount(blogVo.getId()));
-		
 		return "redirect:/blog/{id}/admin/category";
 	}	
 	
