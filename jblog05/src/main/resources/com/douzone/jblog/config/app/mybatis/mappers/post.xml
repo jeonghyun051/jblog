@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="post">
+	<insert id="insert" parameterType="postvo">
+		<![CDATA[
+			insert into post 
+			values (null, #{title }, #{contents }, now(), #{categoryNo })
+		]]>
+	</insert>
+	
+	<select id="defaultSelect" parameterType="map" resultType="postvo">
+		<choose>
+			<when test="categoryNo == 0">
+				<![CDATA[
+					select no, title, contents, reg_date as regDate, category_no as categoryNo
+					from post
+					where no = (
+						select max(no) 
+    					from post
+    					where category_no=(
+    										select min(no) 		
+    										from category 
+    										where blog_id = #{id }));
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					select no, title, contents, reg_date as regDate, category_no as categoryNo
+					from post
+					where no = (
+						select max(no) 
+    					from post
+    					where category_no=${categoryNo })
+				]]>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAll" parameterType="map" resultType="postvo">
+		<choose>
+			<when test="categoryNo == 0">
+				<![CDATA[
+					select no, title, contents, reg_date as regDate, category_no as categoryNo
+					from post
+					where category_no in (select min(no) from category where blog_id = #{id }) and no != #{postNo }
+					order by no desc
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					select no, title, contents, reg_date as regDate, category_no as categoryNo
+					from post
+					where no != #{postNo } and category_no = #{categoryNo }
+					order by no desc
+				]]>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findById" parameterType="long" resultType="postvo">
+		<![CDATA[
+			select no, title, contents, reg_date as regDate, category_no as categoryNo
+			from post
+			where no = #{no }
+		]]>
+	</select>
+</mapper>
