@@ -19,7 +19,14 @@
 					<p>
 						${map.postVo.contents }
 					<p>
+					<c:if test="${authUser.id eq blogVo.id }">
+						<div style="text-align: end">
+							<button>수정</button>
+							<button>삭제</button>
+						</div>
+					</c:if>
 				</div>
+				<br/>
 				<ul class="blog-list">
 					<c:forEach var="post" items="${map.postList }">
 						<li><a href="${pageContext.request.contextPath }/blog/${blogVo.id }/${post.categoryNo }/${post.no }">${post.title }</a> <span>${post.regDate }</span></li>
