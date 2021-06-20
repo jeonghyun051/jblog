@@ -1,0 +1,1 @@
+## JBlog xml config
