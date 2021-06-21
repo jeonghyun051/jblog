@@ -26,8 +26,8 @@ public class CategoryService {
 		return categoryRepository.findAllAndCount(id);	
 	}
 
-	public void delete(Long no) {
-		categoryRepository.delete(no);
+	public int delete(Long no) {
+		return categoryRepository.delete(no);
 		
 	}
 }

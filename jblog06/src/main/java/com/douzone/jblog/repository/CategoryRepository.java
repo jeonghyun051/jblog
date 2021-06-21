@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.douzone.jblog.vo.CategoryVo;
+import com.douzone.jblog.vo.PostVo;
 
 @Repository
 public class CategoryRepository {
@@ -30,8 +31,11 @@ public class CategoryRepository {
 		return sqlSession.selectList("category.findAllAndCount",id);	
 	}
 
-	public void delete(Long no) {
-		sqlSession.delete("category.delete",no);
-		
+	public int delete(Long no) {
+		List<PostVo> postVo = sqlSession.selectList("post.findById",no);
+		if(postVo == null) {
+			return sqlSession.delete("category.delete",no);
+		} else 
+		return -1;
 	}
 }

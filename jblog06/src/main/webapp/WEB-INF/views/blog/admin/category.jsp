@@ -29,12 +29,22 @@
 							<td>${category.name }</td>
 							<td>${category.count }</td>
 							<td>${category.descs }</td>
-							<td><a href="${pageContext.request.contextPath }/blog/${blogVo.id}/admin/category/delete/${category.no}"><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a></td>
+							<td>
+							<c:choose>
+								<c:when test="${category.count == 0}">
+									<a href="${pageContext.request.contextPath }/blog/${blogVo.id}/admin/category/delete/${category.no}">
+									<img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a>
+								</c:when>
+								<c:otherwise>
+									글이 존재합니다.
+								</c:otherwise>
+							</c:choose>
+							</td>
 						</tr>  
 		      		</c:forEach>				  
-				</table>
-      	
-      			<h4 class="n-c">새로운 카테고리 추가</h4>
+				</table>   			
+ 
+	   			<h4 class="n-c">새로운 카테고리 추가</h4>
       			<form action="${pageContext.request.contextPath }/blog/${blogVo.id}/admin/category/add" method="POST">
       			<input type="hidden" name="blogId" value="${blogVo.id }">
 			      	<table id="admin-cat-add">

@@ -118,6 +118,6 @@ public class BlogController {
 	@RequestMapping(value = "/admin/category/delete/{no}", method = RequestMethod.GET)
 	public String delete(@ModelAttribute BlogVo blogVo, @PathVariable Long no, Model model, @PathVariable String id) {
 		categoryService.delete(no);
-		return "redirect:/blog/{id}/admin/category";
+		return "redirect:/blog/{id}/admin/category";	
 	}
 }
