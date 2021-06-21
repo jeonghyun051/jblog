@@ -17,7 +17,7 @@
 				<div class="blog-content">
 					<h4>${map.postVo.title }</h4>
 					<p>
-						${map.postVo.contents }
+						${map.postVo.contents }>
 					<p>
 				</div>
 				<ul class="blog-list">

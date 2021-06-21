@@ -27,6 +27,7 @@ public class CategoryService {
 	}
 
 	public int delete(Long no) {
+		System.out.println(categoryRepository.delete(no));
 		return categoryRepository.delete(no);
 		
 	}

@@ -32,8 +32,8 @@ public class CategoryRepository {
 	}
 
 	public int delete(Long no) {
-		List<PostVo> postVo = sqlSession.selectList("post.findById",no);
-		if(postVo == null) {
+		List<PostVo> postVo = sqlSession.selectList("post.findByNo",no);
+		if(postVo.isEmpty()) {
 			return sqlSession.delete("category.delete",no);
 		} else 
 		return -1;

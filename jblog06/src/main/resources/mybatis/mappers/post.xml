@@ -64,4 +64,14 @@
 			where no = #{no }
 		]]>
 	</select>
+	
+	<select id="findByNo" parameterType="long" resultType="postvo">
+		<![CDATA[
+			select no, title, contents, reg_date as regDate, category_no as categoryNo
+			from post
+			where category_no = #{no }
+		]]>
+	</select>
+	
+
 </mapper>

@@ -24,13 +24,13 @@ public class PostVo {
 		this.no = no;
 	}
 	public String getTitle() {
-		return title;
+		return title.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 	}
 	public void setTitle(String title) {
 		this.title = title;
 	}
 	public String getContents() {
-		return contents;
+		return contents.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 	}
 	public void setContents(String contents) {
 		this.contents = contents;
