@@ -1,5 +1,8 @@
 package com.douzone.jblog.security;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -51,13 +54,12 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		// 7. 권한(Authorization) 체크를 위해서 @Auth의 role 가져오기("ADMIN", "USER")
-		String role = auth.role();		
-		String authRole = authUser.getRole();
-		System.out.println("role:"+ role + +','+ "authRole:"+ authRole);
-		if("ADMIN".equals(authRole) == false && role.equals(authRole) == false) { 
+		String[] url = request.getRequestURL().toString().split("/");
+		String result = URLDecoder.decode(url[5],"utf-8");
+		if(result.equals(authUser.getId()) == false) {
 			response.sendRedirect(request.getContextPath());
 			return false;
-		} 
+		}
 		return true;
 	}	
 }

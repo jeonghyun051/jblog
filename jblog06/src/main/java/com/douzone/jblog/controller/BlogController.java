@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.douzone.jblog.security.Auth;
 import com.douzone.jblog.service.BlogService;
 import com.douzone.jblog.service.CategoryService;
 import com.douzone.jblog.service.FileUploadService;
@@ -71,12 +72,14 @@ public class BlogController {
 		return "blog/index";
 	}
 	
+	@Auth
 	@RequestMapping("/admin/basic")
 	public String adminBasic(@PathVariable("id") String id, Model model) {
 		model.addAttribute("blogVo",blogService.finById(id));
 		return "blog/admin/basic";
 	}
 	
+	@Auth
 	@RequestMapping(value = "/admin/basic", method = RequestMethod.POST)
 	public String upload(@PathVariable("id") String id, @ModelAttribute BlogVo blogVo, @RequestParam("file") MultipartFile file, Model model) {
 		String url = fileUploadService.restore(file);
@@ -89,12 +92,14 @@ public class BlogController {
 		return "blog/admin/basic";
 	}
 	
+	@Auth
 	@RequestMapping("/admin/category")
 	public String adminCategory(@ModelAttribute BlogVo blogVo, Model model) {
 		model.addAttribute("categoryList",categoryService.findAllAndCount(blogVo.getId())); 
 		return "blog/admin/category";
 	}
 	
+	@Auth
 	@RequestMapping(value = "/admin/category/add", method = RequestMethod.POST)
 	public String addCategory(@ModelAttribute BlogVo blogVo, CategoryVo categoryVo,Model model,@PathVariable String id) {
 		categoryService.add(categoryVo);
@@ -102,12 +107,14 @@ public class BlogController {
 		return "redirect:/blog/{id}/admin/category";
 	}	
 	
+	@Auth
 	@RequestMapping("/admin/write")
 	public String write(@ModelAttribute BlogVo blogVo, Model model) {
 		model.addAttribute("categoryList",categoryService.findAll(blogVo.getId()));
 		return "blog/admin/write";
 	}
 	
+	@Auth
 	@RequestMapping(value = "/admin/write", method = RequestMethod.POST)
 	public String write(@ModelAttribute BlogVo blogVo, BindingResult result, PostVo post, Model model, @PathVariable String id) {
 		postService.insert(post);
@@ -115,6 +122,7 @@ public class BlogController {
 		return "blog/admin/write";
 	}
 	
+	@Auth
 	@RequestMapping(value = "/admin/category/delete/{no}", method = RequestMethod.GET)
 	public String delete(@ModelAttribute BlogVo blogVo, @PathVariable Long no, Model model, @PathVariable String id) {
 		categoryService.delete(no);

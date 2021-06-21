@@ -3,7 +3,7 @@
 	xmlns="http://JAVA.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
-	<display-name>jblog05</display-name>
+	<display-name>jblog06</display-name>
 		<!-- 공통 에러 페이지 -->
 	<error-page>
 		<error-code>404</error-code>

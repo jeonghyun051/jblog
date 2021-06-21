@@ -81,7 +81,7 @@
 		}
 		
 		$.ajax({
-			url: "/jblog05/user/checkId?id="+id,
+			url: "/jblog06/user/checkId?id="+id,
 			type: "get",
 			dataType: "json",
 			error: function(xhr, status, e){
