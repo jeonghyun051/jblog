@@ -21,9 +21,9 @@
 				<div class="blog-content">
 					<h4>${map.postVo.title }</h4>
 					<p>
-						${map.postVo.contents }>
+						${map.postVo.contents }
 					<p>
-					<c:if test="${authUser.id eq blogVo.id }">
+					<c:if test="${authUser.id eq blogVo.id && not empty map.postVo }">
 						<div>
 						<form action="${pageContext.request.contextPath }/blog/${blogVo.id}/admin/delete/${map.postVo.no}" method="get">
 							<input id="deleted" class="delete" type="button" value="삭제하기" onclick="button_event()">
