@@ -30,7 +30,8 @@
 			<label class="block-label" for="blog-id">아이디</label>
 			<!-- <input id="blog-id" name="id" type="text"> -->
 			<form:input id="blog-id" path="id" /> 
-			<input id="btn-checkemail" type="button" onClick="idCheck()" value="id 중복체크">
+			<input id="btn-checkemail" type="button" onClick="idCheck()" value="id 중복체크" /> 
+			<input type="hidden" id="reCheck" value="" onClick="reChecked()" />
 			<p style="color:#f00; text-align:left; padding-left:0">
 				<spring:hasBindErrors name="userVo">
 				   <c:if test="${errors.hasFieldErrors('id') }">
@@ -67,7 +68,6 @@
  		if(isChecking == false){
  			alert("아이디 중복체크를 해주세요");
  		}
-
  		return isChecking;
  	}
 	
@@ -105,9 +105,21 @@
 				
 			isChecking = true;
 			$("#blog-id").attr("readonly","readonly");
-			alert("해당 아이디를 사용할 수 있습니다.")
+			alert("해당 아이디를 사용할 수 있습니다.");
+			$("#reCheck").attr("type","button");
+			$("#reCheck").attr("value","재설정");
+			$("#btn-checkemail").attr("type","hidden");
 			}
 		});
+	}
+	
+	function reChecked(){
+		isChecking = false;
+		$("#reCheck").attr("type","hidden");
+		$("#btn-checkemail").attr("type","button");
+		$("#blog-id").val("");
+		$("#blog-id").focus();
+		$("#blog-id").attr("readonly",false);
 	}
 </script>
 </html>
