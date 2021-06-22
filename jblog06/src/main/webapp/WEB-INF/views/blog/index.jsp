@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JBlog</title>
 <Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
+<script src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js" type="text/javascript"></script>
 <style>
 .delete { margin-left: 93%; }
 </style>
@@ -24,9 +25,9 @@
 					<p>
 					<c:if test="${authUser.id eq blogVo.id }">
 						<div>
-							<a class="delete" href="${pageContext.request.contextPath }/blog/${blogVo.id}/admin/delete/${map.postVo.no}">
-								<button>글 삭제</button>
-							</a>
+						<form action="${pageContext.request.contextPath }/blog/${blogVo.id}/admin/delete/${map.postVo.no}" method="get">
+							<input id="deleted" class="delete" type="button" value="삭제하기" onclick="button_event()">
+						</form>
 						</div>
 					</c:if>
 				</div>
@@ -56,4 +57,13 @@
 		<c:import url="/WEB-INF/views/blog/admin/includes/footer.jsp" />
 	</div>
 </body>
+<script>
+	function button_event(){
+		if (confirm("정말 삭제하시겠습니까?") == true){    //확인
+			$("#deleted").attr("type","submit");	
+		}else{   //취소
+		    return;
+		}
+	}
+</script>
 </html>
