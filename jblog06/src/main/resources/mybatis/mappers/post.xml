@@ -73,5 +73,11 @@
 		]]>
 	</select>
 	
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			delete from post
+			where no = #{no}
+		]]>
+	</delete>
 
 </mapper>

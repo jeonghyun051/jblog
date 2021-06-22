@@ -8,6 +8,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JBlog</title>
 <Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
+<style>
+.delete { margin-left: 93%; }
+</style>
 </head>
 <body>
 	<div id="container">
@@ -19,7 +22,15 @@
 					<p>
 						${map.postVo.contents }>
 					<p>
+					<c:if test="${authUser.id eq blogVo.id }">
+						<div>
+							<a class="delete" href="${pageContext.request.contextPath }/blog/${blogVo.id}/admin/delete/${map.postVo.no}">
+								<button>글 삭제</button>
+							</a>
+						</div>
+					</c:if>
 				</div>
+				<br/>
 				<ul class="blog-list">
 					<c:forEach var="post" items="${map.postList }">
 						<li><a href="${pageContext.request.contextPath }/blog/${blogVo.id }/${post.categoryNo }/${post.no }">${post.title }</a> <span>${post.regDate }</span></li>

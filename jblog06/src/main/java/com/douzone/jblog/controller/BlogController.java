@@ -128,4 +128,11 @@ public class BlogController {
 		categoryService.delete(no);
 		return "redirect:/blog/{id}/admin/category";	
 	}
+	
+	@Auth
+	@RequestMapping("/admin/delete/{no}")
+	public String delete(@ModelAttribute BlogVo blogVo, Model model, @PathVariable Long no, @PathVariable String id) {
+		postService.delete(no);
+		return "redirect:/blog/{id}";
+	}
 }

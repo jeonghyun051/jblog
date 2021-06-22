@@ -45,4 +45,8 @@ public class PostRepository {
 		map.put("categoryNo", categoryNo);	
 		return sqlSession.selectList("post.findAll",map);
 	}
+	
+	public void delete(Long no) {
+		sqlSession.delete("post.delete",no);
+	}
 }

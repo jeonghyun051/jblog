@@ -42,4 +42,8 @@ public class PostService {
 			return map;
 		}
 	}
+	
+	public void delete(Long no) {
+		postRepository.delete(no);
+	}
 }
