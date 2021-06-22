@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<% pageContext.setAttribute("newline", "\n"); %>
 <!doctype html>
 <html>
 <head>
@@ -21,7 +22,7 @@
 				<div class="blog-content">
 					<h4>${map.postVo.title }</h4>
 					<p>
-						${map.postVo.contents }
+						${fn:replace(map.postVo.contents, newline, "<br/>") }
 					<p>
 					<c:if test="${authUser.id eq blogVo.id && not empty map.postVo }">
 						<div>
