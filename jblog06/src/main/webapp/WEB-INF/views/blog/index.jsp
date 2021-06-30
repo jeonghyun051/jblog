@@ -48,7 +48,7 @@
 		</div>
 
 		<div id="navigation">
-			<h2>카테고리</h2>
+			<h2>카테고리.</h2>
 			<ul>
 			<c:forEach var="categoryList" items="${categoryList }">
 				<li><a href="${pageContext.request.contextPath }/blog/${blogVo.id }/${categoryList.no }">${categoryList.name }</a></li>
