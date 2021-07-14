@@ -8,6 +8,45 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JBlog</title>
 <Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="${pageContext.request.contextPath }/assets/js/jquery/jquery-3.6.0.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath }/assets/js/ejs/ejs.js" type="text/javascript"></script>
+<script>
+var listItemEJS = new EJS({
+	url: "${pageContext.request.contextPath }/assets/js/ejs/listitem-template.ejs"
+});
+
+$(() => {
+	$("#add-form").submit(function(event){
+		event.preventDefault();
+		
+		vo = {}
+		
+		vo.name = $("#name").val();
+		vo.descs = $("#descs").val();
+		vo.blogId = $("#blog-id").val();
+		
+		console.log("1",vo.name);
+		console.log("2",vo.descs);
+		console.log("3",vo.blogId);
+		
+		// 데이터 등록
+		$.ajax({
+			url: "${pageContext.request.contextPath }/blog/category/api/add",
+			dataType: "json",
+			type: "post",
+			contentType: "application/json",   
+			data: JSON.stringify(vo),
+			success: function(response){
+				var html = listItemEJS.render(response.data);
+				$("#admin-cat").append(html);	 
+			}
+		});
+	});
+});
+
+</script>
 </head>
 <body>
 	<div id="container">
@@ -15,7 +54,7 @@
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<c:import url="/WEB-INF/views/blog/admin/includes/navigation.jsp" />
-		      	<table class="admin-cat">
+		      	<table id= "admin-cat" class="admin-cat">
 		      		<tr>
 		      			<th>번호</th>
 		      			<th>카테고리명</th>
@@ -35,16 +74,16 @@
 				</table>
       	
       			<h4 class="n-c">새로운 카테고리 추가</h4>
-      			<form action="${pageContext.request.contextPath }/blog/${blogVo.id}/admin/category/add" method="POST">
-      			<input type="hidden" name="blogId" value="${blogVo.id }">
+      			<form id="add-form" action="${pageContext.request.contextPath }/blog/${blogVo.id}/admin/category/add" method="POST">
+      			<input id="blog-id" type="hidden" name="blogId" value="${blogVo.id }">
 			      	<table id="admin-cat-add">
 			      		<tr>
 			      			<td class="t">카테고리명</td>
-			      			<td><input type="text" name="name"></td>
+			      			<td><input id="name" type="text" name="name"></td>
 			      		</tr>
 			      		<tr>
 			      			<td class="t">설명</td>
-			      			<td><input type="text" name="descs"></td>
+			      			<td><input id="descs" type="text" name="descs"></td>
 			      		</tr>
 			      		<tr>
 			      			<td class="s">&nbsp;</td>
